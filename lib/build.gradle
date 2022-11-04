@@ -25,7 +25,8 @@ dependencies {
 
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    // api 'org.apache.commons:commons-math3:3.6.1'
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc3'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:31.0.1-jre'
@@ -42,11 +43,11 @@ task apiTests() {
     doLast {
         javaexec {
             main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.tes    t.output
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/api-report.html',
-              '--glue', 'cucumber.first.account',
+              '--glue', 'slotegrator.api',
               'src/test/resources/api']
     }
     }
@@ -57,11 +58,11 @@ task uiTests() {
     doLast {
         javaexec {
             main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.tes    t.output
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/ui-report.html',
-              '--glue', 'cucumber.first.account',
+              '--glue', 'slotegrator.ui',
               'src/test/resources/ui']
     }
     }
