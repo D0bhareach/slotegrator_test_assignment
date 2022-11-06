@@ -3,28 +3,23 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import java.util.Properties;
+import slotegrator.PropertiesUtil;
 
 
-    public class ApiTests{
+public class ApiTests{
 
         private String guest_token;
         private String user_token;
         private Properties props;
 
 
-    private Properties getProps(){
-          if (this.props != null) {
-            return this.props;
-        }
-        Properties prop = new Properties();
-        
-        try(InputStream input = getClass().getResourceAsStream("/api/data.properties")){
-            prop.load(input);
-            this.props = prop;
-         }catch (IOException e){
-            e.printStackTrace();
-         }
-            return prop;
+    private Properties getProps() {
+        if (this.props != null) {return this.props;}
+
+        Properties p = PropertiesUtil.loadProperties(this.getClass(), "/api/data.properties");
+        assert p != null : "properties are null in ApiTest:getProps.";
+        this.props = p;
+        return p;
     }
         // get guest token
     @Given("need guest token")
@@ -39,11 +34,6 @@ import java.util.Properties;
         throw new io.cucumber.java.PendingException();
     }
 
-    @Then("have guest token")
-    public void have_guest_token() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 
 
     // register new user
@@ -59,11 +49,6 @@ import java.util.Properties;
         throw new io.cucumber.java.PendingException();
     }
 
-    @Then("have user token")
-    public void have_user_token() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 
 
     // get new user's profile

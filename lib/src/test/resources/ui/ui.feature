@@ -1,44 +1,31 @@
 Feature: Admin can sort players.
-# Авторизоваться в админке
-# Пользователь успешно авторизован, админ-панельзагрузилась
-# oткрыть список игроков
-# Таблица с игроками загрузилась
-# Отсортировать по любому по любому сталбцу.
-# Таблица верно отсортирована по выбранному сталбцу.
-#
-# URL: http://test-app.d6.dev.devcaz.com/admin/loginAdmin
-# login/password: admin1 / [9k<k8^z!+$$GkuP
-#
-# Must be on start page.
-# Get input for login and enter keys
-# Get input for pass and enter keys
-# get submit button and pressit.
-# Need modificators for login page
-# login is on alert box
     Scenario: Login admin
         Given can get login and password inputs
         When enter login
         When enter password
         Then submit credentials
 
-#
-# Must be on home page for admin
-# Get link to players
-# Click on players
     Scenario: Go to players page
-        Given can get link to players
-        Then click on players
+        Given admin home page is current
+        Then  get to players page
 
-# Must get table with players
-# Get options with first chiche
-# select verivied: No
-# Get options with second choice
-# select active: Active, this way we will get more than one row
-# Get player ? Don't know how 
-# Compare this player with presaved player. Need Player Pojo.
-    Scenario: Sort players and check
-        Given can get options
-        When select first option
-        When select second option
-        When get result
-        Then check if player is expected player
+        # Scenario: Get fisrt of many and check
+        #     Given driver on players page
+        #     When number of rows more then one
+        #     Then compare several players
+        #         |TPEFVO	 |2692635fa3a311bbf|ZOWKD@example.com|
+        #         |ONXNXZ	 |1425635fa3a2cc30a|FDDJH@example.com|
+        #         |GORMSX	 |1481635fa3a2bd4bd|LXXTL@example.com|
+        #         |OAUBYU	 |6970635fa3a2af7b5|OBRBX@example.com|
+        #         |XJDBSV	 |5563635fa3a260cff|SNEIB@example.com|
+
+
+    Scenario: Get single player and compare
+        Given sort players by name
+            |GORMSX	 |1481635fa3a2bd4bd|LXXTL@example.com|
+        When only one player
+        Then get player and compare
+            |GORMSX	 |1481635fa3a2bd4bd|LXXTL@example.com|
+
+    Scenario: Clean after
+        Given clean context

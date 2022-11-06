@@ -17,18 +17,23 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
  
       // cucumber
       testImplementation 'io.cucumber:cucumber-java:7.9.0'
       testImplementation 'io.cucumber:cucumber-junit:7.9.0'
+      testImplementation group: 'io.cucumber', name: 'datatable', version: '7.9.0'
+      testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 
 
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    // This dependency is exported to consumers, that is to say found on their compile classpath
+
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.5.3'
     implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.0-rc3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0-rc3'
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    // This dependency is used internally, and not exposed to consumers on their own
+    // compile classpath.
     implementation 'com.google.guava:guava:31.0.1-jre'
 }
 
@@ -47,7 +52,7 @@ task apiTests() {
             args = [
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/api-report.html',
-              '--glue', 'slotegrator.api',
+              '--glue', 'slotegrator.api.step',
               'src/test/resources/api']
     }
     }
@@ -62,7 +67,7 @@ task uiTests() {
             args = [
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/ui-report.html',
-              '--glue', 'slotegrator.ui',
+              '--glue', 'slotegrator.ui.step',
               'src/test/resources/ui']
     }
     }
@@ -70,6 +75,7 @@ task uiTests() {
 
 tasks.named('test') {
     // Use TestNG for unit tests.
-    dependsOn apiTests, uiTests
+    dependsOn uiTests//,apiTests,  
+    enableAssertions = true
 }
 
