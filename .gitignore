@@ -4,4 +4,6 @@
 # Ignore Gradle build output directory
 build
 cucumber_reports
-lib/src/test/resources/ui/driver.properties  
+/lib/src/test/resources/driver.properties
+lib/src/test/resources/ui/driver.properties.hide  
+lib/src/test/resources/ui/data.properties.hide  
