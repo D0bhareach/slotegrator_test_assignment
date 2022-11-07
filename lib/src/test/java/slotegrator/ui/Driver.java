@@ -15,14 +15,11 @@ import slotegrator.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Value;
 // import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Seleniumn Web Driver's related settings and creation.
- * Keep it simple and build just one driver - FirefoxDriver
- *
- *
-*/
-import org.springframework.context.annotation.PropertySource;
+ */
 
 @Component
 @PropertySource("data.properties")
