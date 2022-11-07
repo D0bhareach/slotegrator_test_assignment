@@ -10,7 +10,6 @@ import java.lang.ProcessBuilder;
 import java.util.concurrent.TimeUnit;
 
 import java.util.Properties;
-import slotegrator.PropertiesUtil;
 
 import org.springframework.beans.factory.annotation.Value;
 // import org.springframework.context.annotation.Profile;
@@ -18,14 +17,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * Seleniumn Web Driver's related settings and creation.
+ * Seleniumn Web Driver's Manager Bean.
+ * Driver create, obtain, destroy related settings and methods.
  */
 
 @Component
-@PropertySource("data.properties")
+@PropertySource("ui_data.properties")
 @PropertySource("driver.properties")
-public class Driver{
+public class DriverManager{
 
+    // cache
     private WebDriver driver = null;
 
     @Value("${app_profile}")
@@ -37,19 +38,16 @@ public class Driver{
     @Value("${geckodriver_exec}")
     private String geckodriver_exec;
 
-    public Driver(){}
+    public DriverManager(){}
  
 
-    public  WebDriver getDriver(){
+    public  WebDriver driver(){
         if (this.driver != null) {
             return this.driver;
         }
-        // Properties props = PropertiesUtil.loadProperties(
-        //         Driver.class, "/ui/driver.properties");
         System.setProperty("webdriver.gecko.driver", geckodriver_exec);
         FirefoxOptions opt = new FirefoxOptions();
         
-        // String app_profile = props.getProperty("app_profile");
         if (app_profile.equals("dev")) {
         opt.addArguments("start-maximazed");
         } else {
@@ -70,7 +68,7 @@ public class Driver{
     /** Because we run on single thread it's practical to keep instance of application
      * running for us. So I would call this method right at the end of  test's chain.
      */
-    public void closeDriver(){
+    public void close(){
         if (driver == null) return;
 
         driver.manage().deleteAllCookies();
