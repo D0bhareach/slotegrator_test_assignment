@@ -7,18 +7,24 @@ import java.util.ArrayList;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
+@Component
 public class PlayersPage {
-    private Properties props;
+
+    private Driver driverBldr;
+
+    private Properties props =
+        PropertiesUtil.loadProperties(this.getClass(), "/ui/data.properties");
+
     private WebDriver driver;
 
-    public PlayersPage(){
-     Properties p = PropertiesUtil.loadProperties(this.getClass(), "/ui/data.properties");
-        assert p != null : "LoginPage properties are null!";
-     this.props = p;
-     WebDriver d = Driver.getDriver();
-        assert driver != null : "LoginPage WebDriver is null!";
-     this.driver = d;
+    @Autowired
+    public PlayersPage(Driver drv){
+        this.driverBldr = drv;
+        this.driver = driverBldr.getDriver();
+
     }
 
     private WebElement getTable(){

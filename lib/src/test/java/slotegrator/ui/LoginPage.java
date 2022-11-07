@@ -7,39 +7,37 @@ import slotegrator.PropertiesUtil;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * PageObject for login page.
  */
 
+@Component
 public class LoginPage {
-    private Properties props;
-    private WebDriver driver;
 
-    public LoginPage(){
-     Properties p = PropertiesUtil.loadProperties(this.getClass(), "/ui/data.properties");
-        assert p != null : "LoginPage properties are null!";
-     this.props = p;
-     WebDriver d = Driver.getDriver();
-        assert driver != null : "LoginPage WebDriver is null!";
-     this.driver = d;
-    }
+    @Autowired
+    private Driver driverBldr;
+
+    public LoginPage(){}
+     private Properties props = PropertiesUtil.loadProperties(
+             this.getClass(), "/ui/data.properties");
+
+     // private WebDriver driver = driverBldr.getDriver();
 
     
-    public Properties getProps(){
-        return this.props;
-    }
     public  WebElement getLoginInput(){
-        return Utils.getWebElement(this.driver, this.props, "login_input_id", ByType.ID);
+        return Utils.getWebElement(this.driverBldr.getDriver(), this.props, "login_input_id", ByType.ID);
     }
     public  WebElement getPasswordInput(){
-        return Utils.getWebElement(this.driver, this.props, "password_input_id", ByType.ID);
+        return Utils.getWebElement(this.driverBldr.getDriver(), this.props, "password_input_id", ByType.ID);
 
     }
 
     public  WebElement getSubmitBtn(){
         return Utils.getWebElement(
-                this.driver, this.props, "submit_btn_class", ByType.CSS_SELECTOR);
+                this.driverBldr.getDriver(), this.props, "submit_btn_class", ByType.CSS_SELECTOR);
     }
 }
 

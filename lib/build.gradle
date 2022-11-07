@@ -21,6 +21,9 @@ dependencies {
       // cucumber
       testImplementation 'io.cucumber:cucumber-java:7.9.0'
       testImplementation 'io.cucumber:cucumber-junit:7.9.0'
+      testImplementation 'io.cucumber:cucumber-spring:7.9.0'
+      testImplementation 'org.springframework:spring-context:5.3.23'
+      testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.5'
       testImplementation group: 'io.cucumber', name: 'datatable', version: '7.9.0'
       testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 
@@ -67,7 +70,7 @@ task uiTests() {
             args = [
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/ui-report.html',
-              '--glue', 'slotegrator.ui.step',
+              '--glue', "slotegrator.ui.step",
               'src/test/resources/ui']
     }
     }

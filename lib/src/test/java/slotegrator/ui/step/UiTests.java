@@ -19,6 +19,15 @@ import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.test.context.ContextConfiguration;
+// import io.cucumber.spring.CucumberContextConfiguration;
+// 
+// @ContextConfiguration("classpath:cucumber.xml")
+// @CucumberContextConfiguration
+// import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class UiTests {
 
 
@@ -28,18 +37,17 @@ public class UiTests {
     private WebElement submit;
 
 
+    private WebDriver driver;
+    private Driver drv;
     private LoginPage loginPage;
     private PlayersPage playersPage;
-    private Properties props;
-
-    private WebDriver driver;
-
-    public UiTests() {
-    
-        loginPage = new LoginPage();
-        playersPage = new PlayersPage();
-        props = PropertiesUtil.loadProperties(getClass(), "/ui/data.properties");
-        driver = Driver.getDriver();
+    private Properties props = PropertiesUtil.loadProperties(getClass(), "/ui/data.properties");
+    @Autowired
+    public UiTests(Driver drv, PlayersPage pp, LoginPage lgp){
+        this.drv = drv;
+        this.driver = drv.getDriver(); 
+        this.playersPage = pp;
+        this.loginPage = lgp;
     }
 
     @Given("can get login and password inputs")
@@ -158,6 +166,6 @@ public class UiTests {
     // ugly, but otherwise will need to use static and I'm too lazy.
     @Given("clean context")
     public void clean_context() {
-        Driver.closeDriver();
+        this.drv.closeDriver();
     }
 }
