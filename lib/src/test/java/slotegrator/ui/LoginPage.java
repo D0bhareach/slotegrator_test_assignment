@@ -1,13 +1,12 @@
 package slotegrator.ui;
 
-/// import slotegrator.ui.Utils;
-// import slotegrator.ui.ByType.*;
 import java.util.Properties;
-import slotegrator.PropertiesUtil;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,29 +14,38 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @Component
+@PropertySource("ui_data.properties")
 public class LoginPage {
 
+    // selectors to use in findElement method
+    @Value("${login_input_id}")
+    private String loginInput;
+
+    @Value("${password_input_id}")
+    private String passwordInput;
+
+    @Value("${submit_btn_class}")
+    private String submitButton;
+
+    private WebDriver driver;
+
     @Autowired
-    private Driver driverBldr;
+    public LoginPage(DriverManager drvManager){
+        this.driver = drvManager.driver();
+    }
 
     public LoginPage(){}
-     private Properties props = PropertiesUtil.loadProperties(
-             this.getClass(), "/ui/data.properties");
-
-     // private WebDriver driver = driverBldr.getDriver();
 
     
     public  WebElement getLoginInput(){
-        return Utils.getWebElement(this.driverBldr.getDriver(), this.props, "login_input_id", ByType.ID);
+        return this.driver.findElement(By.id(this.loginInput));
     }
     public  WebElement getPasswordInput(){
-        return Utils.getWebElement(this.driverBldr.getDriver(), this.props, "password_input_id", ByType.ID);
-
+        return this.driver.findElement(By.id(passwordInput));
     }
 
     public  WebElement getSubmitBtn(){
-        return Utils.getWebElement(
-                this.driverBldr.getDriver(), this.props, "submit_btn_class", ByType.CSS_SELECTOR);
+        return this.driver.findElement(By.cssSelector(this.submitButton));
     }
 }
 
