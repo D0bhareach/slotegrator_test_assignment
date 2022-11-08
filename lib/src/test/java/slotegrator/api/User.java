@@ -1,5 +1,5 @@
 // Place to keep all user data together.
-package slotegrator.utils.api;
+package slotegrator.api;
 
 import lombok.Data;
 import lombok.ToString;

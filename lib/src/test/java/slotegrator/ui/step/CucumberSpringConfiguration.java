@@ -1,9 +1,7 @@
 package slotegrator.ui.step;
 
-import slotegrator.ui.DriverManager;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @CucumberContextConfiguration
