@@ -57,7 +57,7 @@ task apiTests() {
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/api-report.html',
               '--glue', 'slotegrator.api.step',
-              'src/test/resources/api']
+              'src/test/resources/api_feature']
     }
     }
 }
@@ -73,7 +73,7 @@ task uiTests() {
               '--plugin', 'pretty',
               '--plugin', 'html:../cucumber_reports/ui-report.html',
               '--glue', "slotegrator.ui.step",
-              'src/test/resources/ui']
+              'src/test/resources/ui_feature']
     }
     }
 }
